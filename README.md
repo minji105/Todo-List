@@ -12,7 +12,7 @@
 
 - [x] (심화) json-server를 사용해 Todo 정보를 파일로 저장
 
-- [ ] {심화} Custom Hook 사용
+- [ ] (심화) Custom Hook 사용
 ### 도전
 - [x] 기존 CRUD를 useReducer 와 dispatch 를 활용하여 구현
 
