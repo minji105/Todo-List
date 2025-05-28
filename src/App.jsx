@@ -15,7 +15,10 @@ const TodoContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 `
 
 function App() {
