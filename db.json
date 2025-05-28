@@ -1,36 +1,3 @@
 {
-  "todos": [
-    {
-      "id": "d406",
-      "content": "ㄴ"
-    },
-    {
-      "id": "f495",
-      "content": "ㄴ"
-    },
-    {
-      "id": "d4a7",
-      "content": "ㄴ"
-    },
-    {
-      "id": "3388",
-      "content": "ㄴ"
-    },
-    {
-      "id": "37c0",
-      "content": "ㄴ"
-    },
-    {
-      "id": "8a75",
-      "content": "ㄴ"
-    },
-    {
-      "id": "5397",
-      "content": "ㄴ"
-    },
-    {
-      "id": "aa27",
-      "content": "ㄴ"
-    }
-  ]
+  "todos": []
 }
