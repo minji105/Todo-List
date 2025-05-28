@@ -11,6 +11,7 @@ const StyledMenu = styled.div`
   box-shadow: 0 0 40px #cececeab;
   transform: ${(props) => props.open ? 'translateX(0)' : 'translateX(calc(-100% - 40px))'};
   transition: transform .3s ease-in-out;
+  z-index: 10000;
   
   li {
     background-color: #f5f5f5;
