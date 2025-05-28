@@ -3,7 +3,7 @@
     {
       "id": "1a59",
       "content": "item 1",
-      "completed": true
+      "completed": false
     },
     {
       "id": "84db",
@@ -13,7 +13,7 @@
     {
       "id": "3ea4",
       "content": "item 3",
-      "completed": false
+      "completed": true
     }
   ]
 }

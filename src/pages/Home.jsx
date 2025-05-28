@@ -191,7 +191,7 @@ function Home() {
       <StyledInput>
         <input type="text" ref={inputRef} />
         <StyledButton onClick={handleAddTodo}>
-          <img src="/imgs/add.png" alt="add button" />
+          <img src="imgs/add.png" alt="add button" />
         </StyledButton>
       </StyledInput>
 
@@ -248,10 +248,10 @@ function TodoItemSection({ el, handleComplete, completed, handleOpenEditModal, h
       </label>
       <div>
         <StyledButton size={'20px'} onClick={() => handleOpenEditModal(el)}>
-          <img src="/imgs/edit.png" alt="edit" />
+          <img src="imgs/edit.png" alt="edit" />
         </StyledButton>
         <StyledButton size={'20px'} onClick={() => handleDeleteTodo(el.id)}>
-          <img src="/imgs/delete.png" alt="delete" />
+          <img src="imgs/delete.png" alt="delete" />
         </StyledButton>
       </div>
     </TodoItem>

@@ -45,7 +45,7 @@ function Menu({ open, toggleMenu }) {
     <StyledMenu open={open}>
       <MenuHeader>
         <h2>MENU</h2>
-        <img onClick={toggleMenu} src="/imgs/back.png" alt="back" />
+        <img onClick={toggleMenu} src="imgs/back.png" alt="back" />
       </MenuHeader>
       <ul>
         <Link to='/timer' onClick={toggleMenu}><li>Timer</li></Link>
