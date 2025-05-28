@@ -30,7 +30,7 @@ function Header() {
     <>
       <StyledHeader>
         <p onClick={() => setOpenMenu(prev => !prev)}>&#9776;</p>
-        <Link to='/'><h1>TODO</h1></Link>
+        <Link to='/'><h1 onClick={() => setOpenMenu(prev => !prev)}>TODO</h1></Link>
       </StyledHeader>
       <Menu open={openMenu} toggleMenu={() => setOpenMenu(prev => !prev)} />
     </>
