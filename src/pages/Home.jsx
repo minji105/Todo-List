@@ -1,4 +1,4 @@
-import { useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import styled from "styled-components";
 import Quote from "../components/Quote";
 
@@ -21,8 +21,8 @@ const StyledInput = styled.div`
   }
 `
 const StyledButton = styled.button`
-  width: ${(props)=>props.size ? props.size:'28px'};
-  height: ${(props)=>props.size ? props.size:'28px'};
+  width: ${(props) => props.size ? props.size : '28px'};
+  height: ${(props) => props.size ? props.size : '28px'};
   padding: 0;
   margin-left: 8px;
   border: none;
@@ -51,7 +51,7 @@ const initialState = [];
 const todoReducer = (state, action) => {
   switch (action.type) {
     case 'ADD':
-      return [...state, { id: Date.now(), content: action.payload }];
+      return [...state, { id: action.id || Date.now(), content: action.payload }];
     case 'DELETE':
       return state.filter(todo => todo.id !== action.payload);
     case 'UPDATE':
@@ -69,17 +69,36 @@ function Home() {
   const [editInput, setEditInput] = useState('');
   const inputRef = useRef(null);
 
-  const handleAddTodo = () => {
-    if (inputRef.current.value === '') {
+  useEffect(() => {
+    fetch('http://localhost:3001/todos')
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(todo => {
+          dispatch({ type: 'ADD', payload: todo.content, id: todo.id });
+        });
+      });
+  }, []);
+
+  const handleAddTodo = async () => {
+    const content = inputRef.current.value.trim();
+    if (!content) {
       alert('할 일을 입력해주세요.');
       return;
     }
 
-    dispatch({ type: 'ADD', payload: inputRef.current.value });
+    const res = await fetch('http://localhost:3001/todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content })
+    });
+
+    const newTodo = await res.json();
+    dispatch({ type: 'ADD', payload: newTodo.content, id: newTodo.id });
     inputRef.current.value = '';
   }
 
-  const handleDeleteTodo = (id) => {
+  const handleDeleteTodo = async (id) => {
+    await fetch(`http://localhost:3001/todos/${id}`, { method: 'DELETE' });
     dispatch({ type: 'DELETE', payload: id });
   }
 
@@ -88,7 +107,13 @@ function Home() {
     setEditInput(todo.content);
   }
 
-  const handleUpdateTodo = () => {
+  const handleUpdateTodo = async () => {
+    await fetch(`http://localhost:3001/todos/${openModal.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: editInput })
+    });
+
     dispatch({ type: 'UPDATE', payload: { id: openModal.id, content: editInput } });
     setOpenModal(null);
     setEditInput('');
