@@ -9,7 +9,7 @@ const StyledMenu = styled.div`
   height: 100%;
   padding: 24px 16px;
   box-shadow: 0 0 40px #cececeab;
-  transform: ${(props) => props.open ? 'translateX(0)' : 'translateX(-100%)'};
+  transform: ${(props) => props.open ? 'translateX(0)' : 'translateX(calc(-100% - 40px))'};
   transition: transform .3s ease-in-out;
   
   li {

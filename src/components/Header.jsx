@@ -7,10 +7,14 @@ const StyledHeader = styled.header`
   width: 440px;
   height: 52px;
   padding: 0 16px;
+  background-color: #fff;
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
   position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 100;
   p {
     font-size: 1.6rem;
     cursor: pointer;
