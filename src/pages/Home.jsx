@@ -92,6 +92,8 @@ const initialState = [];
 
 const todoReducer = (state, action) => {
   switch (action.type) {
+    case 'INIT':
+      return action.payload;
     case 'ADD':
       if (state.some(todo => todo.id === action.id)) return state;
       return [...state, {
@@ -119,6 +121,10 @@ function Home() {
   const [openModal, setOpenModal] = useState(null);
   const [editInput, setEditInput] = useState('');
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todo));
+  }, [todo])
 
   useEffect(() => {
     fetch('http://localhost:3001/todos')
