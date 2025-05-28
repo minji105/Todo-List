@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import './App.css'
 import Home from './pages/Home';
@@ -23,7 +23,7 @@ const TodoContainer = styled.div`
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <TodoContainer>
         <Header />
         <Routes>
@@ -32,7 +32,7 @@ function App() {
           <Route path='/stopwatch' element={<StopWatch />} />
         </Routes>
       </TodoContainer>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
