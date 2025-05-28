@@ -1,14 +1,29 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import styled from 'styled-components';
 import './App.css'
-import Home from './pages/Home'
+import Home from './pages/Home';
+import Header from './components/Header';
 
+const TodoContainer = styled.div`
+  width: 440px;
+  height: 660px;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+`
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-      </Routes>
+      <TodoContainer>
+        <Header />
+        <Routes>
+          <Route path='/' element={<Home />} />
+        </Routes>
+      </TodoContainer>
     </BrowserRouter>
   )
 }
