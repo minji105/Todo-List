@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import './App.css'
 import Home from './pages/Home';
 import Header from './components/Header';
+import Timer from './pages/Timer';
+import StopWatch from './pages/StopWatch';
 
 const TodoContainer = styled.div`
   width: 440px;
@@ -23,6 +25,8 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/timer' element={<Timer />} />
+          <Route path='/stopwatch' element={<StopWatch />} />
         </Routes>
       </TodoContainer>
     </BrowserRouter>

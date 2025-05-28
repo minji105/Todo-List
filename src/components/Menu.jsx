@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const StyledMenu = styled.div`
   position: absolute;
@@ -46,8 +47,8 @@ function Menu({ open, toggleMenu }) {
         <img onClick={toggleMenu} src="/imgs/back.png" alt="back" />
       </MenuHeader>
       <ul>
-        <li>Timer</li>
-        <li>Stopwatch</li>
+        <Link to='/timer' onClick={toggleMenu}><li>Timer</li></Link>
+        <Link to='/stopwatch' onClick={toggleMenu}><li>Stopwatch</li></Link>
       </ul>
     </StyledMenu>
   );
