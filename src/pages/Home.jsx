@@ -44,7 +44,7 @@ const TodoItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: ${({ $completed }) => $completed ? '':'0 0 4px #cecece'};
+  box-shadow: ${({ $completed }) => $completed ? '' : '0 0 4px #cecece'};
   color: ${({ $completed }) => $completed ? '#bdbdbd' : ''};
   text-decoration: ${({ $completed }) => $completed ? 'line-through' : ''};
 
@@ -179,20 +179,13 @@ function Home() {
         <h2>TO DO</h2>
         <ul>
           {todo.filter(v => !v.completed).map((el) => (
-            <TodoItem key={el.id}>
-              <label>
-                <Checkbox type="checkbox" onClick={() => handleComplete(el)} />
-                {el.content}
-              </label>
-              <div>
-                <StyledButton size={'20px'} onClick={() => handleOpenEditModal(el)}>
-                  <img src="/imgs/edit.png" alt="edit" />
-                </StyledButton>
-                <StyledButton size={'20px'} onClick={() => handleDeleteTodo(el.id)}>
-                  <img src="/imgs/delete.png" alt="delete" />
-                </StyledButton>
-              </div>
-            </TodoItem>
+            <TodoItemSection
+              key={el.id}
+              el={el}
+              completed={false}
+              handleComplete={handleComplete}
+              handleOpenEditModal={handleOpenEditModal}
+              handleDeleteTodo={handleDeleteTodo} />
           ))}
         </ul>
       </section>
@@ -201,20 +194,13 @@ function Home() {
         <h2>COMPLETED</h2>
         <ul>
           {todo.filter(v => v.completed).map((el) => (
-            <TodoItem key={el.id} $completed={true}>
-              <label>
-                <Checkbox $completed={true} type="checkbox" onClick={() => handleComplete(el)} />
-                {el.content}
-              </label>
-              <div>
-                <StyledButton size={'20px'} onClick={() => handleOpenEditModal(el)}>
-                  <img src="/imgs/edit.png" alt="edit" />
-                </StyledButton>
-                <StyledButton size={'20px'} onClick={() => handleDeleteTodo(el.id)}>
-                  <img src="/imgs/delete.png" alt="delete" />
-                </StyledButton>
-              </div>
-            </TodoItem>
+            <TodoItemSection
+              key={el.id}
+              el={el}
+              completed={true}
+              handleComplete={handleComplete}
+              handleOpenEditModal={handleOpenEditModal}
+              handleDeleteTodo={handleDeleteTodo} />
           ))}
         </ul>
       </section>
@@ -231,6 +217,25 @@ function Home() {
       <Quote />
     </StyledTodoList>
   );
+}
+
+function TodoItemSection({ el, handleComplete, completed, handleOpenEditModal, handleDeleteTodo }) {
+  return (
+    <TodoItem $completed={completed}>
+      <label>
+        <Checkbox $completed={completed} type="checkbox" onClick={() => handleComplete(el)} />
+        {el.content}
+      </label>
+      <div>
+        <StyledButton size={'20px'} onClick={() => handleOpenEditModal(el)}>
+          <img src="/imgs/edit.png" alt="edit" />
+        </StyledButton>
+        <StyledButton size={'20px'} onClick={() => handleDeleteTodo(el.id)}>
+          <img src="/imgs/delete.png" alt="delete" />
+        </StyledButton>
+      </div>
+    </TodoItem>
+  )
 }
 
 export default Home;
