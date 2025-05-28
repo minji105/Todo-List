@@ -1,3 +1,14 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "f66e",
+      "content": "1",
+      "completed": false
+    },
+    {
+      "id": "d8b7",
+      "content": "2",
+      "completed": false
+    }
+  ]
 }

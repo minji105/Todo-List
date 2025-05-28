@@ -93,7 +93,12 @@ const initialState = [];
 const todoReducer = (state, action) => {
   switch (action.type) {
     case 'ADD':
-      return [...state, { id: action.id || Date.now(), content: action.payload }];
+      if (state.some(todo => todo.id === action.id)) return state;
+      return [...state, {
+        id: action.id || Date.now(),
+        content: action.payload,
+        completed: action.completed ?? false
+      }];
     case 'DELETE':
       return state.filter(todo => todo.id !== action.payload);
     case 'UPDATE':
