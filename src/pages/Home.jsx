@@ -14,6 +14,7 @@ const StyledInput = styled.div`
   display: flex;
   justify-content: space-between;
   input {
+    flex-grow: 1;
     background-color: transparent;
     outline: none;
     border: none;
@@ -43,7 +44,10 @@ const TodoItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 0 4px #cecece;
+  box-shadow: ${({ $completed }) => $completed ? '':'0 0 4px #cecece'};
+  color: ${({ $completed }) => $completed ? '#bdbdbd' : ''};
+  text-decoration: ${({ $completed }) => $completed ? 'line-through' : ''};
+
   label { 
     display: flex;
     align-items: center;
@@ -60,20 +64,20 @@ const Checkbox = styled.input`
   transition: all 0.2s;
   cursor: pointer;
 
-  &:checked {
+  ${({ $completed }) => $completed && `
     background-color: #6aeb6e;
     border-color: #6aeb6e;
-  }
 
-  &:checked::after {
-    content: '';
-    display: block;
-    width: 8px;
-    height: 8px;
-    margin: 2px;
-    border-radius: 50%;
-    background: white;
-  }
+    &::after {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      margin: 2px;
+      border-radius: 50%;
+      background: white;
+    }
+  `}
 `
 const initialState = [];
 
@@ -170,24 +174,50 @@ function Home() {
           <img src="/imgs/add.png" alt="add button" />
         </StyledButton>
       </StyledInput>
-      <ul>
-        {todo.map((el) => (
-          <TodoItem key={el.id}>
-            <label>
-              <Checkbox type="checkbox" onClick={() => handleComplete(el)} />
-              {el.content}
-            </label>
-            <div>
-              <StyledButton size={'20px'} onClick={() => handleOpenEditModal(el)}>
-                <img src="/imgs/edit.png" alt="edit" />
-              </StyledButton>
-              <StyledButton size={'20px'} onClick={() => handleDeleteTodo(el.id)}>
-                <img src="/imgs/delete.png" alt="delete" />
-              </StyledButton>
-            </div>
-          </TodoItem>
-        ))}
-      </ul>
+
+      <section>
+        <h2>TO DO</h2>
+        <ul>
+          {todo.filter(v => !v.completed).map((el) => (
+            <TodoItem key={el.id}>
+              <label>
+                <Checkbox type="checkbox" onClick={() => handleComplete(el)} />
+                {el.content}
+              </label>
+              <div>
+                <StyledButton size={'20px'} onClick={() => handleOpenEditModal(el)}>
+                  <img src="/imgs/edit.png" alt="edit" />
+                </StyledButton>
+                <StyledButton size={'20px'} onClick={() => handleDeleteTodo(el.id)}>
+                  <img src="/imgs/delete.png" alt="delete" />
+                </StyledButton>
+              </div>
+            </TodoItem>
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>COMPLETED</h2>
+        <ul>
+          {todo.filter(v => v.completed).map((el) => (
+            <TodoItem key={el.id} $completed={true}>
+              <label>
+                <Checkbox $completed={true} type="checkbox" onClick={() => handleComplete(el)} />
+                {el.content}
+              </label>
+              <div>
+                <StyledButton size={'20px'} onClick={() => handleOpenEditModal(el)}>
+                  <img src="/imgs/edit.png" alt="edit" />
+                </StyledButton>
+                <StyledButton size={'20px'} onClick={() => handleDeleteTodo(el.id)}>
+                  <img src="/imgs/delete.png" alt="delete" />
+                </StyledButton>
+              </div>
+            </TodoItem>
+          ))}
+        </ul>
+      </section>
 
       {openModal &&
         <UpdateModal
