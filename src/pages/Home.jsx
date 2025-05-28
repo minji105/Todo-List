@@ -1,6 +1,10 @@
 import { useReducer, useRef, useState } from "react";
 import styled from "styled-components";
 
+const StyledTodoList = styled.div`
+  padding: 0 16px 16px;
+  margin-top: 52px;
+`
 const StyledInput = styled.div`
   background-color: #e6ecf0;
   padding: 8px 8px 8px 16px;
@@ -90,7 +94,7 @@ function Home() {
   }
 
   return (
-    <>
+    <StyledTodoList>
       <StyledInput>
         <input type="text" ref={inputRef} />
         <StyledButton onClick={handleAddTodo}>
@@ -125,7 +129,7 @@ function Home() {
           </ModalContent>
         </Modal>
       )}
-    </>
+    </StyledTodoList>
   );
 }
 

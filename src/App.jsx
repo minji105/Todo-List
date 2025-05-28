@@ -8,7 +8,6 @@ const TodoContainer = styled.div`
   width: 440px;
   height: 660px;
   margin: 0 auto;
-  padding: 16px;
   background-color: #fff;
   border-radius: 16px;
   display: flex;
