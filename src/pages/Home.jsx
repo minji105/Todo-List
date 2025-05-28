@@ -6,6 +6,15 @@ import UpdateModal from "../components/UpdateModal";
 const StyledTodoList = styled.div`
   padding: 0 16px 16px;
   margin-top: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h2 {
+    font-weight: 600;
+    color: #8d8d8d;
+    line-height: 1.5rem;
+  }
 `
 const StyledInput = styled.div`
   background-color: #e6ecf0;
@@ -14,6 +23,7 @@ const StyledInput = styled.div`
   display: flex;
   justify-content: space-between;
   input {
+    flex-grow: 1;
     background-color: transparent;
     outline: none;
     border: none;
@@ -43,7 +53,10 @@ const TodoItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 0 4px #cecece;
+  box-shadow: ${({ $completed }) => $completed ? '' : '0 0 4px #cecece'};
+  color: ${({ $completed }) => $completed ? '#bdbdbd' : ''};
+  text-decoration: ${({ $completed }) => $completed ? 'line-through' : ''};
+
   label { 
     display: flex;
     align-items: center;
@@ -60,20 +73,20 @@ const Checkbox = styled.input`
   transition: all 0.2s;
   cursor: pointer;
 
-  &:checked {
+  ${({ $completed }) => $completed && `
     background-color: #6aeb6e;
     border-color: #6aeb6e;
-  }
 
-  &:checked::after {
-    content: '';
-    display: block;
-    width: 8px;
-    height: 8px;
-    margin: 2px;
-    border-radius: 50%;
-    background: white;
-  }
+    &::after {
+      content: '';
+      display: block;
+      width: 8px;
+      height: 8px;
+      margin: 2px;
+      border-radius: 50%;
+      background: white;
+    }
+  `}
 `
 const initialState = [];
 
@@ -170,24 +183,36 @@ function Home() {
           <img src="/imgs/add.png" alt="add button" />
         </StyledButton>
       </StyledInput>
-      <ul>
-        {todo.map((el) => (
-          <TodoItem key={el.id}>
-            <label>
-              <Checkbox type="checkbox" onClick={() => handleComplete(el)} />
-              {el.content}
-            </label>
-            <div>
-              <StyledButton size={'20px'} onClick={() => handleOpenEditModal(el)}>
-                <img src="/imgs/edit.png" alt="edit" />
-              </StyledButton>
-              <StyledButton size={'20px'} onClick={() => handleDeleteTodo(el.id)}>
-                <img src="/imgs/delete.png" alt="delete" />
-              </StyledButton>
-            </div>
-          </TodoItem>
-        ))}
-      </ul>
+
+      <section>
+        <h2>TO DO</h2>
+        <ul>
+          {todo.filter(v => !v.completed).map((el) => (
+            <TodoItemSection
+              key={el.id}
+              el={el}
+              completed={false}
+              handleComplete={handleComplete}
+              handleOpenEditModal={handleOpenEditModal}
+              handleDeleteTodo={handleDeleteTodo} />
+          ))}
+        </ul>
+      </section>
+
+      <section>
+        <h2>COMPLETED</h2>
+        <ul>
+          {todo.filter(v => v.completed).map((el) => (
+            <TodoItemSection
+              key={el.id}
+              el={el}
+              completed={true}
+              handleComplete={handleComplete}
+              handleOpenEditModal={handleOpenEditModal}
+              handleDeleteTodo={handleDeleteTodo} />
+          ))}
+        </ul>
+      </section>
 
       {openModal &&
         <UpdateModal
@@ -201,6 +226,25 @@ function Home() {
       <Quote />
     </StyledTodoList>
   );
+}
+
+function TodoItemSection({ el, handleComplete, completed, handleOpenEditModal, handleDeleteTodo }) {
+  return (
+    <TodoItem $completed={completed}>
+      <label>
+        <Checkbox $completed={completed} type="checkbox" onClick={() => handleComplete(el)} />
+        {el.content}
+      </label>
+      <div>
+        <StyledButton size={'20px'} onClick={() => handleOpenEditModal(el)}>
+          <img src="/imgs/edit.png" alt="edit" />
+        </StyledButton>
+        <StyledButton size={'20px'} onClick={() => handleDeleteTodo(el.id)}>
+          <img src="/imgs/delete.png" alt="delete" />
+        </StyledButton>
+      </div>
+    </TodoItem>
+  )
 }
 
 export default Home;
