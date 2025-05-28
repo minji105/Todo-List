@@ -2,14 +2,8 @@ import { useReducer, useRef, useState } from "react";
 import styled from "styled-components";
 
 const StyledTodoList = styled.div`
-  width: 440px;
-  height: 660px;
-  margin: 0 auto;
-  padding: 16px;
-  background-color: #fff;
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
+  padding: 0 16px 16px;
+  margin-top: 52px;
 `
 const StyledInput = styled.div`
   background-color: #e6ecf0;
