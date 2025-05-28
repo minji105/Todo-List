@@ -32,7 +32,7 @@ function Header() {
         <p onClick={() => setOpenMenu(prev => !prev)}>&#9776;</p>
         <Link to='/'><h1>TODO</h1></Link>
       </StyledHeader>
-      {openMenu && <Menu open={openMenu} toggleMenu={() => setOpenMenu(prev => !prev)} />}
+      <Menu open={openMenu} toggleMenu={() => setOpenMenu(prev => !prev)} />
     </>
   );
 }
