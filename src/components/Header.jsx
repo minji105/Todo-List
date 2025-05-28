@@ -7,10 +7,14 @@ const StyledHeader = styled.header`
   width: 440px;
   height: 52px;
   padding: 0 16px;
+  background-color: #fff;
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
   position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 100;
   p {
     font-size: 1.6rem;
     cursor: pointer;
@@ -30,7 +34,7 @@ function Header() {
     <>
       <StyledHeader>
         <p onClick={() => setOpenMenu(prev => !prev)}>&#9776;</p>
-        <Link to='/'><h1>TODO</h1></Link>
+        <Link to='/'><h1 onClick={() => setOpenMenu(false)}>TODO</h1></Link>
       </StyledHeader>
       <Menu open={openMenu} toggleMenu={() => setOpenMenu(prev => !prev)} />
     </>
