@@ -12,6 +12,8 @@ const TodoContainer = styled.div`
   border-radius: 16px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
 `
 
 function App() {
