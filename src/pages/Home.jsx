@@ -1,5 +1,6 @@
 import { useReducer, useRef, useState } from "react";
 import styled from "styled-components";
+import Quote from "../components/Quote";
 
 const StyledTodoList = styled.div`
   padding: 0 16px 16px;
@@ -129,6 +130,8 @@ function Home() {
           </ModalContent>
         </Modal>
       )}
+
+      <Quote />
     </StyledTodoList>
   );
 }
