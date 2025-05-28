@@ -1,12 +1,27 @@
-# React + Vite
+## 요구 사항
+### 필수
+- [x] Todo 생성 / 조회 / 수정 / 삭제 (**CRUD**) 기능 구현
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- [x] 현재 시간 표시, 타이머, 스톱워치 중 하나 이상의 기능 구현
 
-Currently, two official plugins are available:
+- [x] 랜덤 명언을 표시할 수 있는 컴포넌트 생성
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [x] useState, useEffect, useRef를 각각 한 번 이상 사용
 
-## Expanding the ESLint configuration
+- [x] 자유롭게 CSS 작성
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- [x] (심화) json-server를 사용해 Todo 정보를 파일로 저장
+
+- [ ] {심화} Custom Hook 사용
+### 도전
+- [x] 기존 CRUD를 useReducer 와 dispatch 를 활용하여 구현
+
+- [x] 투두 리스트를 Check(완료 처리) 할 수 있도록 구현. 완료 처리된 리스트는 다른 스타일로 보여야 함
+
+- [x] 투두 리스트를 LocalStorage를 활용하여 저장 및 불러오기 구현. 웹 사이트를 새로고침 하여도 리스트가 보여야 함.
+
+- [ ] 미완료 / 완료 여부 필터링. 투두리스트 검색
+
+- [x] 투두 리스트 모달을 생성하여 수정 구현
+
+- [ ] (선택) 드래그 & 드롭을 구현하여 투두 리스트의 순서 변경 기능 구현
