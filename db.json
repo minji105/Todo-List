@@ -1,14 +1,3 @@
 {
-  "todos": [
-    {
-      "id": "5e10",
-      "content": "ㄴㄴ",
-      "completed": true
-    },
-    {
-      "id": "edaa",
-      "content": "ㄴㄴㄴ",
-      "completed": false
-    }
-  ]
+  "todos": []
 }

@@ -6,6 +6,15 @@ import UpdateModal from "../components/UpdateModal";
 const StyledTodoList = styled.div`
   padding: 0 16px 16px;
   margin-top: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  h2 {
+    font-weight: 600;
+    color: #8d8d8d;
+    line-height: 1.5rem;
+  }
 `
 const StyledInput = styled.div`
   background-color: #e6ecf0;
