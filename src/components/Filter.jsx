@@ -38,27 +38,12 @@ const Tag = styled.button`
     }
   }
 `
-function Filter({ setTagTodo, setTagDone }) {
-  const handleClickAll = () => {
-    setTagTodo(true);
-    setTagDone(true)
-  }
-
-  const handleClickTodo = () => {
-    setTagTodo(true);
-    setTagDone(false)
-  }
-
-  const handleClickDone = () => {
-    setTagTodo(false);
-    setTagDone(true)
-  }
-
+function Filter({ setActiveTag }) {
   return (
     <TagsContainer>
-      <Tag onClick={handleClickAll}>All</Tag>
-      <Tag onClick={handleClickTodo}>Todo</Tag>
-      <Tag onClick={handleClickDone}>Done</Tag>
+      <Tag onClick={() => setActiveTag('all')}>All</Tag>
+      <Tag onClick={() => setActiveTag('todo')}>Todo</Tag>
+      <Tag onClick={() => setActiveTag('done')}>Done</Tag>
     </TagsContainer>
   );
 }

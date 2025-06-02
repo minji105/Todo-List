@@ -123,8 +123,7 @@ function Home() {
   const [editInput, setEditInput] = useState('');
   const inputRef = useRef(null);
 
-  const [tagTodo, setTagTodo] = useState(true);
-  const [tagDone, setTagDone] = useState(true);
+  const [activeTag, setActiveTag] = useState('all');
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todo));
@@ -199,9 +198,9 @@ function Home() {
         </StyledButton>
       </StyledInput>
 
-      <Filter setTagTodo={setTagTodo} setTagDone={setTagDone} />
+      <Filter setActiveTag={setActiveTag} />
 
-      {tagTodo &&
+      {(activeTag === 'all' || activeTag === 'todo') &&
         <section>
           <h2>TO DO</h2>
           <ul>
@@ -218,7 +217,7 @@ function Home() {
         </section>
       }
 
-      {tagDone &&
+      {(activeTag === 'all' || activeTag === 'done') &&
         <section>
           <h2>COMPLETED</h2>
           <ul>
