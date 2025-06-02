@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import styled from "styled-components";
 import Quote from "../components/Quote";
 import UpdateModal from "../components/UpdateModal";
+import Filter from "../components/Filter";
 
 const StyledTodoList = styled.div`
   padding: 0 16px 16px;
@@ -122,6 +123,9 @@ function Home() {
   const [editInput, setEditInput] = useState('');
   const inputRef = useRef(null);
 
+  const [tagTodo, setTagTodo] = useState(true);
+  const [tagDone, setTagDone] = useState(true);
+
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todo));
   }, [todo])
@@ -195,35 +199,41 @@ function Home() {
         </StyledButton>
       </StyledInput>
 
-      <section>
-        <h2>TO DO</h2>
-        <ul>
-          {todo.filter(v => !v.completed).map((el) => (
-            <TodoItemSection
-              key={el.id}
-              el={el}
-              completed={false}
-              handleComplete={handleComplete}
-              handleOpenEditModal={handleOpenEditModal}
-              handleDeleteTodo={handleDeleteTodo} />
-          ))}
-        </ul>
-      </section>
+      <Filter setTagTodo={setTagTodo} setTagDone={setTagDone} />
 
-      <section>
-        <h2>COMPLETED</h2>
-        <ul>
-          {todo.filter(v => v.completed).map((el) => (
-            <TodoItemSection
-              key={el.id}
-              el={el}
-              completed={true}
-              handleComplete={handleComplete}
-              handleOpenEditModal={handleOpenEditModal}
-              handleDeleteTodo={handleDeleteTodo} />
-          ))}
-        </ul>
-      </section>
+      {tagTodo &&
+        <section>
+          <h2>TO DO</h2>
+          <ul>
+            {todo.filter(v => !v.completed).map((el) => (
+              <TodoItemSection
+                key={el.id}
+                el={el}
+                completed={false}
+                handleComplete={handleComplete}
+                handleOpenEditModal={handleOpenEditModal}
+                handleDeleteTodo={handleDeleteTodo} />
+            ))}
+          </ul>
+        </section>
+      }
+
+      {tagDone &&
+        <section>
+          <h2>COMPLETED</h2>
+          <ul>
+            {todo.filter(v => v.completed).map((el) => (
+              <TodoItemSection
+                key={el.id}
+                el={el}
+                completed={true}
+                handleComplete={handleComplete}
+                handleOpenEditModal={handleOpenEditModal}
+                handleDeleteTodo={handleDeleteTodo} />
+            ))}
+          </ul>
+        </section>
+      }
 
       {openModal &&
         <UpdateModal
