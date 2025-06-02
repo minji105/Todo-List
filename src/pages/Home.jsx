@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Quote from "../components/Quote";
 import UpdateModal from "../components/UpdateModal";
 import Filter from "../components/Filter";
+import Search from "../components/Search";
 
 const StyledTodoList = styled.div`
   padding: 0 16px 16px;
@@ -244,6 +245,7 @@ function Home() {
       }
 
       <Quote />
+      <Search />
     </StyledTodoList>
   );
 }
