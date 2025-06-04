@@ -6,7 +6,7 @@ import Filter from "../components/Filter";
 import Search from "../components/Search";
 
 const StyledTodoList = styled.div`
-  padding: 0 16px 16px;
+  padding: 0 16px 64px;
   margin-top: 52px;
   display: flex;
   flex-direction: column;
@@ -16,20 +16,6 @@ const StyledTodoList = styled.div`
     font-weight: 600;
     color: #8d8d8d;
     line-height: 1.5rem;
-  }
-`
-const StyledInput = styled.div`
-  background-color: #e6ecf0;
-  padding: 8px 8px 8px 16px;
-  border-radius: 50px;
-  display: flex;
-  justify-content: space-between;
-  input {
-    flex-grow: 1;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    font-size: 1rem;
   }
 `
 const StyledButton = styled.button`
@@ -192,12 +178,13 @@ function Home() {
 
   return (
     <StyledTodoList>
-      <StyledInput>
+      <Search />
+      {/* <StyledInput>
         <input type="text" ref={inputRef} />
         <StyledButton onClick={handleAddTodo}>
           <img src="/imgs/add.png" alt="add button" />
         </StyledButton>
-      </StyledInput>
+      </StyledInput> */}
 
       <Filter setActiveTag={setActiveTag} />
 
@@ -245,7 +232,6 @@ function Home() {
       }
 
       <Quote />
-      <Search />
     </StyledTodoList>
   );
 }
