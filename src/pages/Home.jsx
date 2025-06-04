@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import Quote from "../components/Quote";
-import Modal from "../components/Modal";
+import UpdateModal from "../components/Modal";
 import Filter from "../components/Filter";
 import Search from "../components/Search";
 import AddTodo from "../components/AddTodo";
@@ -109,8 +109,8 @@ function Home() {
   const [todo, dispatch] = useReducer(todoReducer, initialState);
   const [openModal, setOpenModal] = useState(null);
   const [editInput, setEditInput] = useState('');
-
   const [activeTag, setActiveTag] = useState('all');
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todo));
@@ -125,6 +125,10 @@ function Home() {
         });
       });
   }, []);
+
+  const searchedTodos = todo.filter(v =>
+    v.content.toLowerCase().includes(keyword.toLocaleLowerCase())
+  );
 
   const handleDeleteTodo = async (id) => {
     await fetch(`http://localhost:3001/todos/${id}`, { method: 'DELETE' });
@@ -160,7 +164,7 @@ function Home() {
 
   return (
     <StyledTodoList>
-      <Search />
+      <Search keyword={keyword} setKeyword={setKeyword} />
 
       <Filter setActiveTag={setActiveTag} />
 
@@ -168,7 +172,7 @@ function Home() {
         <section>
           <h2>TO DO</h2>
           <ul>
-            {todo.filter(v => !v.completed).map((el) => (
+            {searchedTodos.filter(v => !v.completed).map((el) => (
               <TodoItemSection
                 key={el.id}
                 el={el}
@@ -185,7 +189,7 @@ function Home() {
         <section>
           <h2>COMPLETED</h2>
           <ul>
-            {todo.filter(v => v.completed).map((el) => (
+            {searchedTodos.filter(v => v.completed).map((el) => (
               <TodoItemSection
                 key={el.id}
                 el={el}
@@ -199,7 +203,7 @@ function Home() {
       }
 
       {openModal &&
-        <Modal
+        <UpdateModal
           title={'일정 수정'}
           value={editInput}
           setValue={setEditInput}

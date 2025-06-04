@@ -30,10 +30,10 @@ const StyledButton = styled.button`
     width: 100%;
   }
 `
-function Search() {
+function Search({ keyword, setKeyword }) {
   return (
     <StyledInput>
-      <input type="text" />
+      <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
       <StyledButton>
         <img src="/imgs/search.png" alt="search button" />
       </StyledButton>
