@@ -1,11 +1,13 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import Quote from "../components/Quote";
-import UpdateModal from "../components/UpdateModal";
+import UpdateModal from "../components/Modal";
 import Filter from "../components/Filter";
+import Search from "../components/Search";
+import AddTodo from "../components/AddTodo";
 
 const StyledTodoList = styled.div`
-  padding: 0 16px 16px;
+  padding: 0 16px 64px;
   margin-top: 52px;
   display: flex;
   flex-direction: column;
@@ -15,20 +17,6 @@ const StyledTodoList = styled.div`
     font-weight: 600;
     color: #8d8d8d;
     line-height: 1.5rem;
-  }
-`
-const StyledInput = styled.div`
-  background-color: #e6ecf0;
-  padding: 8px 8px 8px 16px;
-  border-radius: 50px;
-  display: flex;
-  justify-content: space-between;
-  input {
-    flex-grow: 1;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    font-size: 1rem;
   }
 `
 const StyledButton = styled.button`
@@ -121,9 +109,8 @@ function Home() {
   const [todo, dispatch] = useReducer(todoReducer, initialState);
   const [openModal, setOpenModal] = useState(null);
   const [editInput, setEditInput] = useState('');
-  const inputRef = useRef(null);
-
   const [activeTag, setActiveTag] = useState('all');
+  const [keyword, setKeyword] = useState('');
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todo));
@@ -139,23 +126,9 @@ function Home() {
       });
   }, []);
 
-  const handleAddTodo = async () => {
-    const content = inputRef.current.value.trim();
-    if (!content) {
-      alert('할 일을 입력해주세요.');
-      return;
-    }
-
-    const res = await fetch('http://localhost:3001/todos', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content, completed: false })
-    });
-
-    const newTodo = await res.json();
-    dispatch({ type: 'ADD', payload: newTodo.content, id: newTodo.id, completed: newTodo.completed });
-    inputRef.current.value = '';
-  }
+  const searchedTodos = todo.filter(v =>
+    v.content.toLowerCase().includes(keyword.toLocaleLowerCase())
+  );
 
   const handleDeleteTodo = async (id) => {
     await fetch(`http://localhost:3001/todos/${id}`, { method: 'DELETE' });
@@ -191,12 +164,7 @@ function Home() {
 
   return (
     <StyledTodoList>
-      <StyledInput>
-        <input type="text" ref={inputRef} />
-        <StyledButton onClick={handleAddTodo}>
-          <img src="/imgs/add.png" alt="add button" />
-        </StyledButton>
-      </StyledInput>
+      <Search keyword={keyword} setKeyword={setKeyword} />
 
       <Filter setActiveTag={setActiveTag} />
 
@@ -204,7 +172,7 @@ function Home() {
         <section>
           <h2>TO DO</h2>
           <ul>
-            {todo.filter(v => !v.completed).map((el) => (
+            {searchedTodos.filter(v => !v.completed).map((el) => (
               <TodoItemSection
                 key={el.id}
                 el={el}
@@ -221,7 +189,7 @@ function Home() {
         <section>
           <h2>COMPLETED</h2>
           <ul>
-            {todo.filter(v => v.completed).map((el) => (
+            {searchedTodos.filter(v => v.completed).map((el) => (
               <TodoItemSection
                 key={el.id}
                 el={el}
@@ -236,14 +204,16 @@ function Home() {
 
       {openModal &&
         <UpdateModal
-          editInput={editInput}
-          setEditInput={setEditInput}
-          handleUpdateTodo={handleUpdateTodo}
-          setOpenModal={setOpenModal}
+          title={'일정 수정'}
+          value={editInput}
+          setValue={setEditInput}
+          onSave={handleUpdateTodo}
+          onClose={() => setOpenModal(null)}
         />
       }
 
       <Quote />
+      <AddTodo dispatch={dispatch} />
     </StyledTodoList>
   );
 }
