@@ -50,15 +50,15 @@ const ModalButtons = styled.div`
   }
 `
 
-function UpdateModal({editInput, setEditInput,handleUpdateTodo,setOpenModal}) {
+function UpdateModal({ title, value, setValue, onSave, onClose }) {
   return (
     <Modal>
       <ModalContent>
-        <h3>일정 수정</h3>
-        <textarea type="text" value={editInput} onChange={(e) => setEditInput(e.target.value)} />
+        <h3>{title}</h3>
+        <textarea value={value} onChange={(e) => setValue(e.target.value)} />
         <ModalButtons>
-          <button onClick={handleUpdateTodo}>저장</button>
-          <button onClick={() => setOpenModal(null)}>취소</button>
+          <button onClick={onSave}>저장</button>
+          <button onClick={onClose}>취소</button>
         </ModalButtons>
       </ModalContent>
     </Modal>

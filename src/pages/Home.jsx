@@ -1,9 +1,10 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import Quote from "../components/Quote";
-import UpdateModal from "../components/UpdateModal";
+import Modal from "../components/Modal";
 import Filter from "../components/Filter";
 import Search from "../components/Search";
+import AddTodo from "../components/AddTodo";
 
 const StyledTodoList = styled.div`
   padding: 0 16px 64px;
@@ -108,7 +109,6 @@ function Home() {
   const [todo, dispatch] = useReducer(todoReducer, initialState);
   const [openModal, setOpenModal] = useState(null);
   const [editInput, setEditInput] = useState('');
-  const inputRef = useRef(null);
 
   const [activeTag, setActiveTag] = useState('all');
 
@@ -125,24 +125,6 @@ function Home() {
         });
       });
   }, []);
-
-  const handleAddTodo = async () => {
-    const content = inputRef.current.value.trim();
-    if (!content) {
-      alert('할 일을 입력해주세요.');
-      return;
-    }
-
-    const res = await fetch('http://localhost:3001/todos', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ content, completed: false })
-    });
-
-    const newTodo = await res.json();
-    dispatch({ type: 'ADD', payload: newTodo.content, id: newTodo.id, completed: newTodo.completed });
-    inputRef.current.value = '';
-  }
 
   const handleDeleteTodo = async (id) => {
     await fetch(`http://localhost:3001/todos/${id}`, { method: 'DELETE' });
@@ -179,12 +161,6 @@ function Home() {
   return (
     <StyledTodoList>
       <Search />
-      {/* <StyledInput>
-        <input type="text" ref={inputRef} />
-        <StyledButton onClick={handleAddTodo}>
-          <img src="/imgs/add.png" alt="add button" />
-        </StyledButton>
-      </StyledInput> */}
 
       <Filter setActiveTag={setActiveTag} />
 
@@ -223,15 +199,17 @@ function Home() {
       }
 
       {openModal &&
-        <UpdateModal
-          editInput={editInput}
-          setEditInput={setEditInput}
-          handleUpdateTodo={handleUpdateTodo}
-          setOpenModal={setOpenModal}
+        <Modal
+          title={'일정 수정'}
+          value={editInput}
+          setValue={setEditInput}
+          onSave={handleUpdateTodo}
+          onClose={() => setOpenModal(null)}
         />
       }
 
       <Quote />
+      <AddTodo dispatch={dispatch} />
     </StyledTodoList>
   );
 }

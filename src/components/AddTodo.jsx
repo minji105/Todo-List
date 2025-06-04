@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import Modal from "./Modal";
 
 const StyledButton = styled.button`
   position: fixed;
@@ -20,71 +22,44 @@ const StyledButton = styled.button`
     width: 100%;
   }
 `
-const Modal = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: #222222c7;
-  position: fixed;
-  top: 0;
-  left: 0;
-`
-const ModalContent = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 250px;
-  height: 180px;
-  padding: 16px;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
+function AddTodo({ dispatch }) {
+  const [openModal, setOpenModal] = useState(false);
+  const [input, setInput] = useState('');
+
+  const handleAddTodo = async () => {
+    const content = input.trim();
+    if (!content) {
+      alert('할 일을 입력해주세요.');
+      return;
+    }
+
+    const res = await fetch('http://localhost:3001/todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content, completed: false })
+    });
+
+    const newTodo = await res.json();
+    dispatch({ type: 'ADD', payload: newTodo.content, id: newTodo.id, completed: newTodo.completed });
+    
+    setInput('');
+    setOpenModal(null);
   }
-  textarea {
-    padding: 8px;
-    font-size: 1rem;
-    font-family: inherit;
-    flex-grow: 1;
-    width: 100%;
-    border: 1px solid #cccccc;
-    resize: none;
-    outline: none;
-  }
-`
-const ModalButtons = styled.div`
-  display: flex;
-  gap: 8px;
-  width: 100%;
-  button {
-    flex-grow: 1;
-    padding: 8px;
-    background-color: #cae1ff;
-    border: none;
-    border-radius: 4px;
-  }
-`
-function AddTodo() {
+
   return (
     <>
-      <StyledButton>
+      <StyledButton onClick={() => setOpenModal(true)}>
         <img src="/imgs/add.png" alt="add button" />
       </StyledButton>
-      <Modal>
-        <ModalContent>
-          <h3>일정 수정</h3>
-          <textarea type="text" />
-          <ModalButtons>
-            <button>저장</button>
-            <button>취소</button>
-          </ModalButtons>
-        </ModalContent>
-      </Modal>
+      {openModal &&
+        <Modal
+          title={'할 일 추가'}
+          value={input}
+          setValue={setInput}
+          onSave={handleAddTodo}
+          onClose={() => setOpenModal(false)}
+        />
+      }
     </>
   );
 }
