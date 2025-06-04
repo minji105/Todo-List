@@ -1,7 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
 import styled from "styled-components";
 import Quote from "../components/Quote";
-import UpdateModal from "../components/Modal";
+import Modal from "../components/Modal";
 import Filter from "../components/Filter";
 import Search from "../components/Search";
 import AddTodo from "../components/AddTodo";
@@ -127,7 +127,7 @@ function Home() {
   }, []);
 
   const searchedTodos = todo.filter(v =>
-    v.content.toLowerCase().includes(keyword.toLocaleLowerCase())
+    v.content.toLowerCase().includes(keyword.toLowerCase())
   );
 
   const handleDeleteTodo = async (id) => {
@@ -203,7 +203,7 @@ function Home() {
       }
 
       {openModal &&
-        <UpdateModal
+        <Modal
           title={'일정 수정'}
           value={editInput}
           setValue={setEditInput}
